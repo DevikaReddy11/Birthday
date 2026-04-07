@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise ❤️ My Love </title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0a0f2c, #0a0f2c);
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.container {
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  color: #fff;
+}
+
+p {
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.heart {
+  font-size: 40px;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #0d1b2a;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.proposal {
+  margin-top: 30px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.flower {
+  font-size: 40px;
+}
+
+/* Mobile Friendly */
+@media (max-width: 600px) {
+  h1 { font-size: 1.7rem; }
+  p { font-size: 1rem; }
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+  <h1> For My Loved one 🎂🥂</h1>
+  <p>You are the most special person in my life 💖</p>
+  <div class="heart">❤️</div>
+
+  <button onclick="showProposal()"> Click on the 🍑 for surprise💝 </button>
+
+  <div id="proposal" class="hidden proposal">
+    <p class="flower">😍 ❤️ 😍 </p>
+    <h1>I Love You ❤️</h1>
+    <p>
+      On your special day, I just want to say...
+      <br><br>
+      Wish You Happy Birthday Praveen Mama❤️💍❤️
+    </p>
+    <p class="flower">😘 🖤 😘  </p>
+  </div>
+</div>
+
+<script>
+function showProposal() { 
+  document.getElementById("proposal").classList.remove("hidden"); 
+  startConfetti(); 
+} 
+
+// Canvas setup
+const canvas = document.getElementById('confetti'); 
+const ctx = canvas.getContext('2d'); 
+canvas.width = window.innerWidth; 
+canvas.height = window.innerHeight; 
+
+let confetti = []; 
+
+function createConfetti() { 
+  for (let i = 0; i < 150; i++) { 
+    confetti.push({ 
+      x: Math.random() * canvas.width, 
+      y: Math.random() * canvas.height, 
+      r: Math.random() * 6 + 2, 
+      d: Math.random() * 50, 
+      color: `hsl(${Math.random() * 30 + 330}, 100%, 70%)` // pink/red hearts 💖
+    }); 
+  } 
+}
+
+// ❤️ Draw Heart Shape
+function drawHeart(x, y, size, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(size / 20, size / 20);
+
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(0, -3, -5, -3, -5, 0);
+  ctx.bezierCurveTo(-5, 3, 0, 5, 0, 7);
+  ctx.bezierCurveTo(0, 5, 5, 3, 5, 0);
+  ctx.bezierCurveTo(5, -3, 0, -3, 0, 0);
+  ctx.closePath();
+
+  ctx.fillStyle = color;
+  ctx.fill();
+
+  ctx.restore();
+}
+
+// 🎉 Draw Confetti (Hearts)
+function drawConfetti() { 
+  ctx.clearRect(0, 0, canvas.width, canvas.height); 
+
+  confetti.forEach(c => { 
+    drawHeart(c.x, c.y, c.r * 2, c.color);
+  }); 
+
+  updateConfetti(); 
+} 
+
+function updateConfetti() { 
+  confetti.forEach(c => { 
+    c.y += Math.cos(c.d) + 1; 
+    c.x += Math.sin(c.d); 
+
+    if (c.y > canvas.height) { 
+      c.y = 0; 
+      c.x = Math.random() * canvas.width; 
+    } 
+  }); 
+} 
+
+function startConfetti() { 
+  createConfetti(); 
+  setInterval(drawConfetti, 20); 
+}
+</script>
+
+</body>
+</html>
